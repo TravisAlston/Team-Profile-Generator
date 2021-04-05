@@ -3,6 +3,13 @@ const fs = require('fs');
 const Engineer = require ('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
+const pageGenerator = require('./src/page-template');
+const writeFile = require('./src/generate-page');
+
+let manager = [];
+let engineer = [];
+let intern = [];
+let employeeArr = {manager, engineer, intern};
 
 function prompt() {
 
@@ -39,14 +46,20 @@ function prompt() {
                 default: true
             }])
             .then(({office, anotherEntry}) => {
-                Manager.push(new Manager(employee, id, email, office))
+                manager.push(new Manager(employee, id, email, office))
 
                 if (anotherEntry) {
                     return prompt();
                 }
             })
-            } else if
+            }
         })
     }
 
-    prompt();
+    prompt()
+    .then(teamData => {
+        return generateEmptyCoverage(employeeArr)
+    })
+    .then(pageHTML => {
+        return writeFile(pageHTML)
+    });
