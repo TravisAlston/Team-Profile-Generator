@@ -52,9 +52,49 @@ function prompt() {
                     return prompt();
                 }
             })
+            } else if (role === 'Engineer') {
+                return inquirer
+                .prompt([{
+                    type:'text',
+                    name: 'github',
+                    message:'What is the Engineer Github username?'
+                },
+                {
+                    type: 'confirm',
+                    name: 'anotherEntry',
+                    message: 'Would you like to add another employee',
+                    default: true
+                }])
+                .then(({github, anotherEntry}) => {
+                    engineer.push(new Engineer(employee, id, email, github))
+
+                    if(anotherEntry) {
+                        return prompt();
+                    }
+                })
+            } else if (role === 'Intern') {
+                return inquirer
+                .prompt([{
+                    type:'text',
+                    name:'school',
+                    message:'What is the Intern school?'
+                },
+            {
+                type:'confirm',
+                name:'anotherEntry',
+                message:'Would you like to add another employee?',
+                default: true
+            }])
+            .then(({school, anotherEntry}) => {
+                intern.push(new Intern(employee, id, email, school))
+
+                if(anotherEntry) {
+                    return prompt();
+                }
+            })
             }
         })
-    }
+    };
 
     prompt()
     .then(teamData => {
