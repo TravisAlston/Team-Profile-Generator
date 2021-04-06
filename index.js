@@ -3,7 +3,7 @@ const fs = require('fs');
 const Engineer = require ('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
-const pageGenerator = require('./src/page-template');
+const generatePage = require('./src/page-template');
 const writeFile = require('./src/generate-page');
 
 let manager = [];
@@ -98,7 +98,7 @@ function prompt() {
 
     prompt()
     .then(teamData => {
-        return generateEmptyCoverage(employeeArr)
+        return generatePage(employeeArr)
     })
     .then(pageHTML => {
         return writeFile(pageHTML)
